@@ -170,6 +170,8 @@ const dom = {
   incInput:   $('increment-input'),
   winTitle:   $('win-title'),
   winSub:     $('win-sub'),
+  readyOverlay: $('ready-overlay'),
+  readyBtn:     $('ready-btn'),
 };
 
 /* ── Screen helpers ─────────────────────────────────────── */
@@ -284,6 +286,16 @@ function initGame() {
   S.over      = false;
 
   updateUI();
+  // Show READY button
+  dom.readyOverlay.classList.add('visible');
+  dom.readyOverlay.classList.remove('hidden');
+}
+
+/* ── Hide ready button ──────────────────────────────────── */
+function hideReadyBtn() {
+  dom.readyOverlay.classList.remove('visible');
+  dom.readyOverlay.classList.add('hidden');
+  setTimeout(() => dom.readyOverlay.classList.remove('hidden'), 420);
 }
 
 /* ── Tap handler ────────────────────────────────────────── */
@@ -357,6 +369,7 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
 dom.homeArrow.addEventListener('click', () => {
   stopTicker();
   S.running = false; S.over = false;
+  dom.readyOverlay.classList.remove('visible', 'hidden');
   showScreen('landing');
 });
 
@@ -370,7 +383,7 @@ dom.pauseBtn.addEventListener('click', () => {
 
 // Reset
 dom.resetBtn.addEventListener('click', () => {
-  initGame();      // reset with same settings
+  initGame();      // reset with same settings — also shows READY btn again
   updateUI();
 });
 
@@ -406,7 +419,20 @@ dom.rematch.addEventListener('click', () => {
 dom.menu.addEventListener('click', () => {
   closeOverlays();
   stopTicker();
+  dom.readyOverlay.classList.remove('visible', 'hidden');
   showScreen('landing');
+});
+
+// READY button — starts the clock for Player 1
+dom.readyBtn.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (S.over) return;
+  hideReadyBtn();
+  SFX.click(); vibe(60);
+  S.active  = 1;
+  S.running = true;
+  startTicker();
+  updateUI();
 });
 
 // Keyboard (desktop testing / Bluetooth keyboard)
@@ -421,3 +447,4 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 /* ── Boot ───────────────────────────────────────────────── */
 // Highlight default 5-min preset
 document.querySelector('.preset-btn[data-time="300"]').classList.add('selected');
+
