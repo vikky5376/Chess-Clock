@@ -13,9 +13,9 @@
 </head>
 <body>
 
-  <!-- ╔═══════════════════════════════════════╗
-       ║         LANDING SCREEN               ║
-       ╚═══════════════════════════════════════╝ -->
+  <!--╔═══════════════════════════════════════╗
+      ║         LANDING SCREEN                ║
+      ╚═══════════════════════════════════════╝ -->
   <section id="landing-screen" class="screen active">
     <div class="landing-content">
 
@@ -44,7 +44,7 @@
         <path d="M35 28 L50 20 L50 38 Z" fill="rgba(255,255,255,0.2)"/>
       </svg>
 
-      <h1 class="landing-title">Chess Clock</h1>
+      <h1 class="landing-title">Chess clock</h1>
       <p class="landing-subtitle">Tournament Edition</p>
 
       <button id="open-setup-btn" class="btn-start">NEW GAME</button>
@@ -86,6 +86,15 @@
         <span class="move-count" id="moves-1">0 moves</span>
       </div>
 
+    </div>
+
+    <!-- READY overlay button (direct child of game-screen so it covers both panels) -->
+    <div id="ready-overlay" class="ready-overlay">
+      <button id="ready-btn" class="btn-ready" aria-label="Ready to start">
+        <span class="ready-icon">♟</span>
+        <span class="ready-label">READY</span>
+        <span class="ready-sub">Tap to start the clock</span>
+      </button>
     </div>
 
     <!-- Control Bar -->
@@ -148,9 +157,9 @@
   </div>
 
 
-  <!-- ╔═══════════════════════════════════════╗
-       ║           WIN OVERLAY                ║
-       ╚═══════════════════════════════════════╝ -->
+  <!--  ╔═══════════════════════════════════════╗
+        ║           WIN OVERLAY                 ║
+        ╚═══════════════════════════════════════╝ -->
   <div id="win-overlay" class="overlay">
     <div class="modal-card">
       <span class="win-icon">🏆</span>
