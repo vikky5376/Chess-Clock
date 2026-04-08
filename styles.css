@@ -194,6 +194,7 @@ body::before {
   text-transform: uppercase;
   color: var(--text-dim);
 }
+
 .creator-credit {
   margin-top: 10px;
   font-size: 0.6rem;
@@ -352,6 +353,139 @@ body::before {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+
+/* ── Ready Overlay ──────── */
+.ready-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px; /* height of .ctrl-bar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.85);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  background: rgba(13, 13, 26, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+/* Shown state */
+.ready-overlay.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Fade-out state (before being fully removed) */
+.ready-overlay.hidden {
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+}
+
+.btn-ready {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0d0d1a 0%, #12121f 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,60,172,0.6),
+    0 0 40px rgba(255,60,172,0.4),
+    0 0 80px rgba(0,210,255,0.2),
+    inset 0 0 30px rgba(255,60,172,0.1);
+  animation: readyPulse 2s ease-in-out infinite alternate;
+  transition: transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Spinning rainbow ring */
+.btn-ready::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(var(--c1), var(--c5), var(--c6), var(--c4), var(--c3), var(--c2), var(--c1));
+  animation: ringSpinReady 3s linear infinite;
+  z-index: -1;
+  filter: blur(2px);
+}
+
+/* Inner dark mask to make the ring appear as a border */
+.btn-ready::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #0d0d1a;
+  z-index: -1;
+}
+
+@keyframes ringSpinReady {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes readyPulse {
+  from {
+    box-shadow:
+      0 0 0 3px rgba(255,60,172,0.5),
+      0 0 30px rgba(255,60,172,0.3),
+      0 0 60px rgba(0,210,255,0.15);
+  }
+  to {
+    box-shadow:
+      0 0 0 5px rgba(255,60,172,0.9),
+      0 0 60px rgba(255,60,172,0.6),
+      0 0 100px rgba(0,210,255,0.35);
+  }
+}
+
+.btn-ready:active {
+  transform: scale(0.9);
+}
+
+.ready-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(255,210,0,0.8));
+  animation: iconFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+.ready-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, var(--c1), var(--c6), var(--c4));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ready-sub {
+  font-size: 0.55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 
@@ -577,6 +711,7 @@ body::before {
   text-align: center;
   outline: none;
   -moz-appearance: textfield;
+  appearance: textfield;
   transition: border 0.2s;
 }
 
