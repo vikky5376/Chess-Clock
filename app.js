@@ -444,7 +444,54 @@ document.addEventListener('keydown', e => {
 // Prevent context menu on long press (mobile)
 document.addEventListener('contextmenu', e => e.preventDefault());
 
+/* ── 3D Falling Chess Pieces Background ─────────────────── */
+function initChessBackground() {
+  const bg = document.getElementById('chess-background');
+  if (!bg) return;
+  const pieces = ['♚', '♛', '♜', '♝', '♞', '♟', '♔', '♕', '♖', '♗', '♘', '♙'];
+  const colors = ['#ff3cac', '#784ba0', '#2b86c5', '#00d2ff', '#f7971e', '#ffd200'];
+  const numPieces = 30; // Amount of falling pieces
+  
+  for (let i = 0; i < numPieces; i++) {
+    const p = document.createElement('div');
+    p.className = 'chess-piece';
+    p.textContent = pieces[Math.floor(Math.random() * pieces.length)];
+    
+    // Randomize properties
+    const left = Math.random() * 100; // 0 to 100vw
+    const size = 1.5 + Math.random() * 3.5; // 1.5rem to 5.0rem
+    const duration = 12 + Math.random() * 25; // 12s to 37s fall duration
+    const delay = -(Math.random() * 40); // Random start phase
+    
+    // 3D rotation targets
+    const rx = (Math.random() - 0.5) * 1080; 
+    const ry = (Math.random() - 0.5) * 1080;
+    const rz = (Math.random() - 0.5) * 720;
+    
+    // Drift (horizontal movement during fall)
+    const drift = (Math.random() - 0.5) * 35; // -17.5vw to +17.5vw drift
+    
+    // Colors
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    
+    p.style.left = `${left}vw`;
+    p.style.fontSize = `${size}rem`;
+    p.style.animationDuration = `${duration}s`;
+    p.style.animationDelay = `${delay}s`;
+    p.style.color = color;
+    p.style.opacity = 0.15 + Math.random() * 0.3; // 0.15 to 0.45 opacity
+    
+    p.style.setProperty('--rx', `${rx}deg`);
+    p.style.setProperty('--ry', `${ry}deg`);
+    p.style.setProperty('--rz', `${rz}deg`);
+    p.style.setProperty('--drift', `${drift}vw`);
+    
+    bg.appendChild(p);
+  }
+}
+
 /* ── Boot ───────────────────────────────────────────────── */
+initChessBackground();
+
 // Highlight default 5-min preset
 document.querySelector('.preset-btn[data-time="300"]').classList.add('selected');
-
